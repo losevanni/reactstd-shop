@@ -1,13 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar,Nav, Container,Row,Col} from "react-bootstrap";
 import {useState} from 'react';
 import {data} from './data.js';
-import {a} from './datatest.js';
+// import {a} from './datatest.js';
 
 function App() {
-  let [shoes]=useState(data);
+  let [shoes,shoesSet]=useState(data);
 
   return (
     <div className="App">   
@@ -24,35 +23,28 @@ function App() {
       <div className='main-bg'></div>
       <div className='container'>
         <div className='row'>
-          <div className='col-md-4' >
-            <img src={"/img/shoes1.jpg"} width="80%"></img>  {/* / 경로는 /public 에서 시작 된다 */}
-            {/* <img src={"https://codingapple1.github.io/shop/shoes1.jpg"} width="80%"></img> */}
-            <h4>{shoes[0].title}</h4>
-            <p> {shoes[0].content}</p>
-            </div>
-          <div className='col-md-4'>
-            <img src={process.env.PUBLIC_URL+'/img/shoes2.jpg'} width="80%"></img>
-            <h4>{shoes[1].title}</h4>
-            <p> {shoes[1].content}</p>
-            </div>
-          <div className='col-md-4'>
-            <img src={process.env.PUBLIC_URL+'/img/shoes3.jpg'} width="80%"></img>
-            <h4>{shoes[2].title}</h4>
-            <p> {shoes[2].content}</p>
-          </div>
+        {
+          shoes.map(function(d,i){
+            return(
+              <Compo com_data={shoes[i]}></Compo>
+            )
+          })
+        }
         </div>
       </div>
-      
     </div>
   );
 }
 function Compo(props){
+  let comdata=props.com_data;
+  let imgpath=comdata.img_path;
   return (
     <>
       <div className='col-md-4'>
-        <img src={process.env.PUBLIC_URL+'/img/shoes2.jpg'} width="80%"></img>
-        <h4>{"s"}</h4>
-        <p> {""}</p>
+        <img src={process.env.PUBLIC_URL+imgpath} width="80%"></img>
+        <h4>{comdata.title}</h4>
+        <p> {comdata.content}</p>
+        <p>{comdata.price} 원</p>
       </div>
     </>
   )
